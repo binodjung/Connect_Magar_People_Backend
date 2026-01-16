@@ -15,9 +15,9 @@ class UserManager(BaseUserManager):
             email=self.normalize_email(email),
             full_name=full_name,
             mobile_number=mobile_number,
+            is_active=False,
         )
         user.set_password(password)
-        user.is_active = True
         user.save(using=self._db)
         return user
 
@@ -40,6 +40,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     full_name = models.CharField(max_length=150)
     email = models.EmailField(unique=True)
     mobile_number = models.CharField(max_length=15, unique=True)
+
+    email_otp = models.CharField(max_length=6, null=True, blank=True)
+    otp_created_at = models.DateTimeField(null=True, blank=True)
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
