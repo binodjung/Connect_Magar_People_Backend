@@ -5,8 +5,16 @@ from django.conf import settings
 
 def send_email_otp(user):
     otp = str(random.randint(100000, 999999))
-    user.email_otp = otp
-    user.otp_created_at = timezone.now()
+    
+    # Handle different models having different field names
+    if hasattr(user, 'email_otp'):
+        user.email_otp = otp
+    elif hasattr(user, 'otp'):
+        user.otp = otp
+        
+    if hasattr(user, 'otp_created_at'):
+        user.otp_created_at = timezone.now()
+        
     user.save()
 
     try:
