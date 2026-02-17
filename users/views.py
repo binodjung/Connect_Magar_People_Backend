@@ -4,12 +4,14 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 
+from django.db import transaction
+
 from .serializers import RegisterSerializer, LoginSerializer
 from .utils import send_email_otp
 
 from rest_framework.exceptions import ValidationError
 from .serializers import VerifyEmailSerializer
-from .models import User
+from .models import User, PendingUser
 
 
 def get_tokens_for_user(user):
@@ -23,11 +25,32 @@ class RegisterView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
+        username = request.data.get('username')
+        email = request.data.get('email', '').lower().strip() # Normalize email
+
+        print(f"DEBUG: Registering username: {username}, email: {email}")
+
+        # Cleanup: Delete any "Stuck" Inactive users in the main table
+        # This fixes the issue where a user is created but verification failed/stalled
+        User.objects.filter(username=username, is_active=False).delete()
+        User.objects.filter(email=email, is_active=False).delete()
+
+        # Check if ACTIVE user already exists
+        if User.objects.filter(username=username).exists() or \
+           User.objects.filter(email=email).exists():
+            return Response({"message": "User with this username or email already exists."}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Clear any existing PendingUser to allow re-registration
+        PendingUser.objects.filter(email=email).delete()
+        PendingUser.objects.filter(username=username).delete()
+
         serializer = RegisterSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = serializer.save()
+        # Save to PendingUser
+        pending_user = serializer.save()
 
-        send_email_otp(user)
+        # Send OTP (modified to accept PendingUser)
+        send_email_otp(pending_user)
 
         return Response({
             "message": "Verification code sent to your email"
@@ -38,28 +61,67 @@ class VerifyEmailView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
+        print("DEBUG: VerifyEmailView called")
+        print(f"DEBUG: Request Data: {request.data}")
         serializer = VerifyEmailSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        email = serializer.validated_data["email"]
+        email = serializer.validated_data["email"].lower().strip() # Normalize email
         otp = serializer.validated_data["otp"]
+        
+        print(f"DEBUG: Verifying for email: '{email}' with OTP: '{otp}'")
 
         try:
-            user = User.objects.get(email=email)
-        except User.DoesNotExist:
-            raise ValidationError("Invalid email")
+            with transaction.atomic():
+                try:
+                    # Debug: List all PendingUsers to see if it's there
+                    # all_pending = PendingUser.objects.values('email', 'otp')
+                    # print(f"DEBUG: Current PendingUsers: {list(all_pending)}")
+                    
+                    pending_user = PendingUser.objects.get(email=email)
+                except PendingUser.DoesNotExist:
+                    print(f"DEBUG: PendingUser not found for '{email}'")
+                    # Check if user is already verified (Active User)
+                    if User.objects.filter(email=email, is_active=True).exists():
+                         return Response({"message": "Email already verified. Please login."}, status=status.HTTP_400_BAD_REQUEST)
+                    
+                    # If user exists but is Inactive, it means registration is broken/stuck
+                    if User.objects.filter(email=email, is_active=False).exists():
+                         # We deleted the stuck user in RegisterView, so this shouldn't happen unless they didn't re-register
+                        return Response({"message": "Registration session expired. Please Register again."}, status=status.HTTP_400_BAD_REQUEST)
+                        
+                    raise ValidationError("Registration session expired or invalid email.")
 
-        if user.email_otp != otp:
-            raise ValidationError("Invalid OTP")
+                if pending_user.otp != otp:
+                     raise ValidationError("Invalid OTP")
+                
+                print(f"DEBUG: Creating user for {email}")
+                # Create the actual User
+                user = User.objects.create_user(
+                    username=pending_user.username,
+                    email=pending_user.email,
+                    full_name=pending_user.full_name,
+                    mobile_number=pending_user.mobile_number,
+                    password=None  # Don't set password via create_user to avoid double hashing
+                )
+                
+                # Assign the already hashed password from PendingUser
+                user.password = pending_user.password
+                user.is_active = True
+                user.save()
+                
+                print("DEBUG: User created and activated")
 
-        user.is_active = True
-        user.email_otp = None
-        user.otp_created_at = None
-        user.save()
+                # Delete PendingUser
+                pending_user.delete()
 
-        return Response({
-            "message": "Email verified successfully. You can now login."
-        })
+                return Response({
+                    "message": "Email verified successfully.",
+                    "tokens": get_tokens_for_user(user)
+                }, status=status.HTTP_200_OK)
+        except Exception as e:
+            print(f"DEBUG: Verify failed: {e}")
+            raise e
 
 class LoginView(APIView):
     permission_classes = [AllowAny]

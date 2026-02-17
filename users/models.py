@@ -31,6 +31,7 @@ class UserManager(BaseUserManager):
         )
         user.is_staff = True
         user.is_superuser = True
+        user.is_active = True  # Ensure superuser is active
         user.save(using=self._db)
         return user
 
@@ -55,3 +56,16 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.username
+
+
+class PendingUser(models.Model):
+    username = models.CharField(max_length=50, unique=True)
+    full_name = models.CharField(max_length=150)
+    email = models.EmailField(unique=True)
+    mobile_number = models.CharField(max_length=15, unique=True)
+    password = models.CharField(max_length=128)
+    otp = models.CharField(max_length=6)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Pending: {self.email} ({self.otp})"
