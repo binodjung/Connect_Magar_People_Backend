@@ -3,8 +3,8 @@ from django.conf import settings
 
 class BlogPost(models.Model):
     title = models.CharField(max_length=255)
-    category = models.CharField(max_length=100)  # Type of the blog
-    description = models.TextField()  # Long description
+    category = models.CharField(max_length=100)
+    description = models.TextField()
     image = models.ImageField(upload_to='blog_images/', null=True, blank=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='blog_posts')
     created_at = models.DateTimeField(auto_now_add=True)
@@ -35,7 +35,18 @@ class Like(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ('post', 'user')  # A user can like a post only once
+        unique_together = ('post', 'user')
 
     def __str__(self):
         return f"{self.user.username} likes {self.post.title}"
+
+class Bookmark(models.Model):
+    post = models.ForeignKey(BlogPost, on_delete=models.CASCADE, related_name='bookmarks')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('post', 'user')
+
+    def __str__(self):
+        return f"{self.user.username} bookmarked {self.post.title}"
