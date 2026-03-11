@@ -25,6 +25,7 @@ urlpatterns = [
     path("api/auth/", include("users.urls")),
     path("api/blog/", include("blog.urls")),
     path("api/dictionary/", include("dictionary.urls")),
+    path("api/history/", include("history.urls")),
 ]
 
 from django.conf import settings
