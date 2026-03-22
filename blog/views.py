@@ -34,9 +34,15 @@ class BlogPostViewSet(viewsets.ModelViewSet):
 
         if not created:
             like.delete()
-            return Response({'status': 'unliked'}, status=status.HTTP_200_OK)
+            is_liked = False
+        else:
+            is_liked = True
 
-        return Response({'status': 'liked'}, status=status.HTTP_201_CREATED)
+        return Response({
+            'success': True,
+            'isLiked': is_liked,
+            'total_likes': post.likes.count()
+        }, status=status.HTTP_200_OK)
 
     # ── Bookmark toggle ──────────────────────────────────────────────────────
     @decorators.action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
@@ -48,9 +54,14 @@ class BlogPostViewSet(viewsets.ModelViewSet):
 
         if not created:
             bookmark.delete()
-            return Response({'status': 'unbookmarked'}, status=status.HTTP_200_OK)
+            is_bookmarked = False
+        else:
+            is_bookmarked = True
 
-        return Response({'status': 'bookmarked'}, status=status.HTTP_201_CREATED)
+        return Response({
+            'success': True,
+            'isBookmarked': is_bookmarked
+        }, status=status.HTTP_200_OK)
 
     # ── Liked posts list ─────────────────────────────────────────────────────
     @decorators.action(detail=False, methods=['get'], permission_classes=[permissions.IsAuthenticated],
