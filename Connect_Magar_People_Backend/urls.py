@@ -26,6 +26,7 @@ urlpatterns = [
     path("api/blog/", include("blog.urls")),
     path("api/dictionary/", include("dictionary.urls")),
     path("api/history/", include("history.urls")),
+    path("api/feedback/", include("feedback.urls")),
 ]
 
 from django.conf import settings

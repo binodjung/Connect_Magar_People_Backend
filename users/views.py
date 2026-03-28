@@ -153,3 +153,30 @@ class ProfileView(APIView):
             "mobile_number" : request.user.mobile_number,
         })
 
+    def patch(self, request):
+        user = request.user
+        data = request.data
+        
+        # Email is NOT updateable
+        if 'email' in data:
+            return Response({"error": "Email cannot be updated"}, status=status.HTTP_400_BAD_REQUEST)
+            
+        if 'full_name' in data:
+            user.full_name = data['full_name']
+        if 'mobile_number' in data:
+            user.mobile_number = data['mobile_number']
+        if 'username' in data:
+            new_username = data['username']
+            if User.objects.filter(username=new_username).exclude(id=user.id).exists():
+                return Response({"error": "Username already taken"}, status=status.HTTP_400_BAD_REQUEST)
+            user.username = new_username
+             
+        user.save()
+        return Response({
+            "username": user.username,
+            "full_name": user.full_name,
+            "email": user.email,
+            "mobile_number" : user.mobile_number,
+            "message": "Profile updated successfully"
+        })
+
