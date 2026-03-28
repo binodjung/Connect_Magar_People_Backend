@@ -56,6 +56,11 @@ class WordViewSet(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         queryset = super().get_queryset()
         letter = self.request.query_params.get('letter', None)
+        category = self.request.query_params.get('category', None)
+
         if letter:
             queryset = queryset.filter(magar_word__istartswith=letter)
+        if category:
+            queryset = queryset.filter(category__iexact=category)
+            
         return queryset
