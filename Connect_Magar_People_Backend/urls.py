@@ -27,6 +27,7 @@ urlpatterns = [
     path("api/dictionary/", include("dictionary.urls")),
     path("api/history/", include("history.urls")),
     path("api/feedback/", include("feedback.urls")),
+    path("api/quiz/", include("quiz.urls")),
 ]
 
 from django.conf import settings
