@@ -1,0 +1,72 @@
+INSERT INTO `quiz_quizquestion` (`question_text`, `option1`, `option2`, `option3`, `option4`, `correct_option`, `category`, `created_at`, `updated_at`) VALUES
+-- -----------------------------------------------------------------------------------------
+-- LANGUAGE CATEGORY (20 Questions)
+-- -----------------------------------------------------------------------------------------
+('What is the traditional greeting in the Magar language?', 'Jhorle', 'Namaste', 'Sewanharo', 'Tashi Delek', 1, 'language', NOW(), NOW()),
+('The Magar languages belong to which language family?', 'Indo-Aryan', 'Austroasiatic', 'Dravidian', 'Tibeto-Burman', 4, 'language', NOW(), NOW()),
+('How many distinct linguistic groups are there within the Magar language?', 'Two', 'Three (Dhut, Kham, Kaike)', 'Four', 'Five', 2, 'language', NOW(), NOW()),
+('What is the script specifically developed and revived for the Magar language?', 'Devanagari', 'Akkha script', 'Sirijonga script', 'Ranjana script', 2, 'language', NOW(), NOW()),
+('Which group of Magars primarily speaks the Magar Kham language?', 'Eastern Magars', 'Athara Magarat (Western Magars)', 'Northern Magars', 'Southern Magars', 2, 'language', NOW(), NOW()),
+('The Magar Kaike language is spoken by Magars primarily in which district?', 'Palpa', 'Rolpa', 'Dolpa', 'Syangja', 3, 'language', NOW(), NOW()),
+('Which is the most widely spoken Magar language group?', 'Magar Dhut', 'Magar Kham', 'Tarali (Kaike)', 'Chantyal', 1, 'language', NOW(), NOW()),
+('Who is known for inventing/reviving the Akkha script for the Magar language?', 'Balkrishna Sama', 'MS Thapa', 'Bhanubhakta Acharya', 'King Mahendra', 2, 'language', NOW(), NOW()),
+('What does the word "Dhut" mean in Magar Dhut?', 'People', 'Land', 'Language/Speech', 'Religion', 3, 'language', NOW(), NOW()),
+('In Magar Dhut, the word "Di" translates to what in English?', 'Fire', 'Water', 'Earth', 'Air', 2, 'language', NOW(), NOW()),
+('Which of the following numbers is "Som" in the Magar language?', 'One', 'Two', 'Three', 'Four', 3, 'language', NOW(), NOW()),
+('How do you say "Sun" in typical Magar Dhut?', 'Nam', 'Jun', 'Tara', 'Ghaam', 1, 'language', NOW(), NOW()),
+('What is the Magar term for "Mother"?', 'Ba', 'Boi', 'Nini', 'Mama', 2, 'language', NOW(), NOW()),
+('How is the word "Rice (cooked)" pronounced in Magar?', 'Chawun', 'Bhaat', 'Ja', 'Roti', 3, 'language', NOW(), NOW()),
+('What does the Magar suffix "-di" often indicate in place names (e.g., Myagdi, Marsyangdi)?', 'Mountain', 'River/Water', 'Village', 'Forest', 2, 'language', NOW(), NOW()),
+('Which province of Nepal has the highest number of Magar native speakers?', 'Province 1', 'Bagmati', 'Lumbini', 'Karnali', 3, 'language', NOW(), NOW()),
+('What is the Magar word for "Meat"?', 'Sya', 'Maasu', 'Kukkha', 'Khas', 1, 'language', NOW(), NOW()),
+('In the Magar calendar, what does the term "Lha" refer to?', 'Day', 'Year', 'Month', 'Week', 3, 'language', NOW(), NOW()),
+('Which famous river name is derived from the Magar language meaning "Dark River"?', 'Myagdi', 'Kaligandaki', 'Marsyangdi', 'Bheri', 1, 'language', NOW(), NOW()),
+('The promotion of Magar language is officially supported on a community level mostly by which institution?', 'Nepal Language Commission', 'Nepal Magar Association', 'Both A and B', 'None of the above', 3, 'language', NOW(), NOW()),
+
+-- -----------------------------------------------------------------------------------------
+-- CULTURE CATEGORY (20 Questions)
+-- -----------------------------------------------------------------------------------------
+('What is the traditional attire for Magar women called?', 'Gunyo Cholo and Mujetro', 'Sari', 'Kurta Suruwal', 'Hakupatasi', 1, 'culture', NOW(), NOW()),
+('What is the traditional dress covering the upper body of Magar men, acting like a woven sack?', 'Daura Suruwal', 'Bhangra', 'Bakhu', 'Dhoti', 2, 'culture', NOW(), NOW()),
+('Which of the following is a traditional Magar dance usually performed during the Tihar festival?', 'Maruni', 'Dhan Naach', 'Sorathi', 'Lakhey', 1, 'culture', NOW(), NOW()),
+('The "Hurra" dance is a popular group dance of which Magar community?', 'Western Magars', 'Eastern Magars', 'Northern Magars', 'Southern Magars', 2, 'culture', NOW(), NOW()),
+('"Sorathi" is a classical dance style prominently associated with which ethnic groups?', 'Gurung and Magar', 'Newar', 'Tharu', 'Rai', 1, 'culture', NOW(), NOW()),
+('What is the primary religion/belief system practiced by the majority of Magars historically?', 'Christianity', 'Islam', 'Hinduism, Buddhism & Animism', 'Jainism', 3, 'culture', NOW(), NOW()),
+('The traditional Magar priest who performs rituals and shamanic healing is often called?', 'Pandit', 'Lama', 'Bhusal / Rama (Jhankri)', 'Purohit', 3, 'culture', NOW(), NOW()),
+('What is the main festival of the Magar people celebrating the worship of nature and the earth?', 'Dashain', 'Bhume Puja (Bal Puja)', 'Tihar', 'Holi', 2, 'culture', NOW(), NOW()),
+('During Bhume Puja, what is primarily worshipped by the Magar community?', 'The Sun', 'The Earth / Nature', 'The Moon', 'Rivers', 2, 'culture', NOW(), NOW()),
+('"Ghaanto" is an intricate, trance-like traditional dance performed by young virgin girls in which communities?', 'Magar and Gurung', 'Tamang', 'Sherpa', 'Limbu', 1, 'culture', NOW(), NOW()),
+('Which traditional percussion instrument is most famously associated with the Magar community?', 'Madal', 'Bansuri', 'Sarangi', 'Dholak', 1, 'culture', NOW(), NOW()),
+('What is the traditional sub-clan organization of Magars called?', 'Thar (Ale, Thapa, Rana, Pun, etc.)', 'Caste system', 'Varna system', 'None of the above', 1, 'culture', NOW(), NOW()),
+('Magars are globally renowned for their valor and historical service in which military regimen?', 'Gurkha Regiments', 'French Foreign Legion', 'US Marines', 'Swiss Guard', 1, 'culture', NOW(), NOW()),
+('What is the traditional knee-length wrap skirt worn by Magar men called?', 'Bhangra', 'Kachhad', 'Topi', 'Patuka', 2, 'culture', NOW(), NOW()),
+('Which traditional gold ornament is most classically worn by Magar women on their nose septum?', 'Bulaaki / Phuli', 'Dhungri', 'Tilahari', 'Naugedi', 1, 'culture', NOW(), NOW()),
+('What covers a Magar woman head traditionally during cultural events?', 'Mujetro', 'Pachhyaura', 'Topi', 'Ghumti', 1, 'culture', NOW(), NOW()),
+('The unique traditional fermented drink prepared in Magar households is commonly known as?', 'Chhyang', 'Wine', 'Beer', 'Mead', 1, 'culture', NOW(), NOW()),
+('"Kaura" is a fast-paced rhythmic dance originating from which region Magar community?', 'Syangja / Tanahun', 'Jhapa / Morang', 'Dolpa', 'Rolpa', 1, 'culture', NOW(), NOW()),
+('In classic traditional Magar architecture, houses were historically built in what distinctive shape?', 'Round / Oval shape', 'Triangular', 'Purely Square', 'Pagoda style', 1, 'culture', NOW(), NOW()),
+('What is the staple food historically heavily relied upon by hilly Magar communities?', 'Dhido (Millet/Maize paste) and Sya', 'Momo', 'Pizza', 'Bread', 1, 'culture', NOW(), NOW()),
+
+-- -----------------------------------------------------------------------------------------
+-- HISTORY CATEGORY (20 Questions)
+-- -----------------------------------------------------------------------------------------
+('Historically, Magarat (the land of Magars) was politically divided into which two main confederations?', 'Northern and Southern', 'Athara (18) and Barha (12) Magarat', 'Eastern and Western', 'Upper and Lower', 2, 'history', NOW(), NOW()),
+('Who was the famous Magar king of Palpa who extended his territory to Kathmandu before Nepal unification?', 'King Mukunda Sen', 'King Mansingh Khadka Magar', 'King Yalambar', 'King Drabya Shah', 1, 'history', NOW(), NOW()),
+('Which revolutionary from the Magar community is recognized as the First Martyr of Nepal?', 'Dasharath Chand', 'Dharma Bhakta Mathema', 'Lakhan Thapa Magar', 'Gangalal Shrestha', 3, 'history', NOW(), NOW()),
+('Where did Lakhan Thapa Magar organize his rebellion against the autocratic Rana regime?', 'Kathmandu', 'Bungkot, Gorkha', 'Pokhara', 'Palpa', 2, 'history', NOW(), NOW()),
+('The Sen Kings of Palpa and Makawanpur had strong demographic and military foundations based on which ethnic group?', 'Magars', 'Tharus', 'Sherpas', 'Newars', 1, 'history', NOW(), NOW()),
+('The ancient administrative structure "Barha Magarat" (12 Magarat) was mostly located in which region?', 'East of Koshi', 'Between Marsyangdi and Karnali rivers (Gandaki zone)', 'West of Mahakali', 'Kathmandu Valley', 2, 'history', NOW(), NOW()),
+('During the Anglo-Nepalese war, Magar soldiers played a critical role. Which famous fort was defended by Balbhadra Kunwar along with Magar and Gurung troops?', 'Nalapani', 'Sindhuligadhi', 'Makawanpur', 'Hariharpur', 1, 'history', NOW(), NOW()),
+('Who was the first Nepali Gurkha to receive the Victoria Cross (VC) for his extreme bravery?', 'Gaje Ghale', 'Kulbir Thapa Magar', 'Ram Bahadur Limbu', 'Agansing Rai', 2, 'history', NOW(), NOW()),
+('Kulbir Thapa Magar won the Victoria Cross while fighting in which major global conflict?', 'World War I (1915)', 'World War II', 'Falklands War', 'Afghan War', 1, 'history', NOW(), NOW()),
+('The historical kingdoms of Bhirkot, Satahun, Gahraun, and Dhor heavily consisted of the populations of?', 'Magars', 'Limbus', 'Yadavs', 'Brahmins', 1, 'history', NOW(), NOW()),
+('Which region is widely considered the ancestral homeland (origin) of the Magars in Nepal?', 'Lumbini & Rapti zones', 'Janakpur', 'Sagarmatha', 'Mechi', 1, 'history', NOW(), NOW()),
+('V.C. Tul Bahadur Pun was a famous Magar soldier highly decorated in which war?', 'World War I', 'World War II (Burma Campaign)', 'Korean War', 'Vietnam War', 2, 'history', NOW(), NOW()),
+('Which King of Gorkha initiated the unification of Nepal, actively incorporating Magarat territories and Magar troops?', 'Prithvi Narayan Shah', 'Mahendra', 'Birendra', 'Tribhuvan', 1, 'history', NOW(), NOW()),
+('The military prowess of Magar warriors was historically first documented heavily by which foreign entity during conflicts?', 'The British East India Company', 'The Romans', 'The Mongols', 'The Egyptians', 1, 'history', NOW(), NOW()),
+('Lakhan Thapa Magar was executed by hanging for plotting the overthrow of which autocratic ruler?', 'Jung Bahadur Rana', 'Chandra Shumsher', 'Mohan Shumsher', 'King Surendra', 1, 'history', NOW(), NOW()),
+('The historical "Athara Magarat" (18 Magarat) was situated primarily in the region of which modern-day zones?', 'Bheri and Rapti', 'Bagmati', 'Koshi', 'Mechi', 1, 'history', NOW(), NOW()),
+('Historically, many ancient Magar kings held specific titles. Which of these were common titles used by Magar rulers?', 'Khadka, Sen, Thapa', 'Shah', 'Malla', 'Singha', 1, 'history', NOW(), NOW()),
+('Who was a prominent figure and founding president of the Nepal Magar Association (NMA)?', 'Lakhan Thapa', 'Gore Bahadur Khapangi', 'Barsha Man Pun', 'Ram Bahadur Thapa', 2, 'history', NOW(), NOW()),
+('Which prominent Magar leader was the first Nepali minister to take the official oath of office in the Magar language?', 'Gore Bahadur Khapangi', 'Balaram Gharti Magar', 'Onsari Gharti Magar', 'Nanda Bahadur Pun', 1, 'history', NOW(), NOW()),
+('History notes that Prithvi Narayan Shah’s unification army was predominantly composed of Magars, Gurungs, Khas, and Thakuris. (True/False)', 'True', 'False', 'Only Khas', 'Only Newars', 1, 'history', NOW(), NOW());
