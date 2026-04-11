@@ -1,7 +1,7 @@
 from rest_framework import viewsets, permissions, status, decorators
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
-from .models import BlogPost, Comment, Like, Bookmark
+from .models import BlogPost, Comment, Like, Bookmark, Donation
 from .serializers import BlogPostListSerializer, BlogPostDetailSerializer, CommentSerializer
 from django.db.models import Count
 
@@ -17,7 +17,7 @@ class BlogPostViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:
             return [permissions.AllowAny()]
-        if self.action in ['like', 'bookmark', 'comment', 'liked_posts', 'bookmarked_posts']:
+        if self.action in ['like', 'bookmark', 'comment', 'liked_posts', 'bookmarked_posts', 'donate', 'verify_donation']:
             return [permissions.IsAuthenticated()]
         return [permissions.IsAdminUser()]
 
@@ -97,6 +97,56 @@ class BlogPostViewSet(viewsets.ModelViewSet):
         comment = Comment.objects.create(post=post, user=request.user, content=content)
         serializer = CommentSerializer(comment)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    # ── Donate ──────────────────────────────────────────────────────────────
+    @decorators.action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
+    def donate(self, request, pk=None):
+        post = self.get_object()
+        amount = request.data.get('amount')
+        transaction_id = request.data.get('transaction_id')
+
+        if not amount or not transaction_id:
+            return Response({'error': 'Amount and transaction_id are required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if not post.allow_donation:
+            return Response({'error': 'This post does not accept donations'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            donation = Donation.objects.create(
+                post=post,
+                donor=request.user,
+                amount=amount,
+                transaction_id=transaction_id,
+                status='PENDING'
+            )
+            return Response({
+                'success': True,
+                'donation_id': donation.id,
+                'transaction_id': donation.transaction_id,
+                'amount': str(donation.amount),
+                'status': donation.status,
+            }, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+    # ── Verify Donation ───────────────────────────────────────────────────────
+    @decorators.action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated], url_path='verify-donation')
+    def verify_donation(self, request, pk=None):
+        transaction_id = request.data.get('transaction_id')
+
+        if not transaction_id:
+            return Response({'error': 'transaction_id is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            donation = Donation.objects.get(transaction_id=transaction_id)
+            # In a real app we would call eSewa API to verify the transaction.
+            # But for sandbox and this demo we just mark it complete.
+            donation.status = 'COMPLETE'
+            donation.save()
+            return Response({'success': True, 'status': 'COMPLETE'}, status=status.HTTP_200_OK)
+        except Donation.DoesNotExist:
+            return Response({'error': 'Donation not found'}, status=status.HTTP_404_NOT_FOUND)
+
 
 
 class CommentViewSet(viewsets.ModelViewSet):
