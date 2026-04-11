@@ -41,6 +41,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     full_name = models.CharField(max_length=150)
     email = models.EmailField(unique=True)
     mobile_number = models.CharField(max_length=15, unique=True)
+    profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
 
     email_otp = models.CharField(max_length=6, null=True, blank=True)
     otp_created_at = models.DateTimeField(null=True, blank=True)
